@@ -1,0 +1,10 @@
+.auth-wrapper {
+  display: grid;
+  justify-content: right;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  width: 50rem;
+}

@@ -1,0 +1,190 @@
+<div class="card">
+  <div class="card-header">Cliente</div>
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+    <form [formGroup]="formCustomer">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Dados Pessoais</a>
+          <ng-template ngbNavContent>
+            <div class="container">
+              <div class="form-group row">
+                <app-input
+                  class="col-4"
+                  label="Nome*"
+                  name="name"
+                  controlName="name"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="name"
+                  [(ngModel)]="customer.name"
+                  ngDefaultControl
+                  required
+                ></app-input>
+                <app-input
+                  class="col-4"
+                  label="Email*"
+                  name="email"
+                  controlName="email"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="email"
+                  [(ngModel)]="customer.email"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+              <div class="form-group row">
+                <app-input
+                  class="col-4"
+                  label="CPF*"
+                  controlName="cpf"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="cpf"
+                  [(ngModel)]="customer.cpf"
+                  ngDefaultControl
+                  required
+                ></app-input>
+                <app-input
+                  class="col-4"
+                  label="RG*"
+                  id="rg"
+                  controlName="rg"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="rg"
+                  [(ngModel)]="customer.rg"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+              <div class="form-group row">
+                <app-input
+                  class="col-4"
+                  label="Telefone"
+                  controlName="fixo"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="fixo"
+                  [(ngModel)]="customer.contacts[0].number"
+                  ngDefaultControl
+                ></app-input>
+                <app-input
+                  class="col-4"
+                  label="Celular*"
+                  controlName="movel"
+                  message=""
+                  [formGroup]="formCustomer"
+                  formControlName="movel"
+                  [(ngModel)]="customer.contacts[1].number"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Endereço</a>
+          <ng-template ngbNavContent>
+            <div class="container">
+              <div class="form-group row">
+                <app-input
+                  class="col-5"
+                  label="CEP"
+                  controlName="zipCode"
+                  formControlName="zipCode"
+                  [formGroup]="formCustomer"
+                  (keyup.enter)="onEnter($event)"
+                  [(ngModel)]="zipCode"
+                  ngDefaultControl
+                  required
+                ></app-input>
+                <app-input
+                  class="col-5"
+                  label="Logradouro"
+                  controlName="street"
+                  [formGroup]="formCustomer"
+                  formControlName="street"
+                  [(ngModel)]="customer.customerAddress.street"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+              <div class="form-group row">
+                <app-input
+                  class="col-5"
+                  label="Número"
+                  controlName="number"
+                  [formGroup]="formCustomer"
+                  formControlName="number"
+                  [(ngModel)]="customer.customerAddress.number"
+                  ngDefaultControl
+                  required
+                ></app-input>
+                <app-input
+                  class="col-5"
+                  label="Bairro"
+                  controlName="district"
+                  [formGroup]="formCustomer"
+                  formControlName="district"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+              <div class="form-group row">
+                <app-input
+                  class="col-5"
+                  label="Complemento"
+                  controlName="complement"
+                  [formGroup]="formCustomer"
+                  formControlName="complement"
+                  ngDefaultControl
+                ></app-input>
+                <app-input
+                  class="col-5"
+                  label="Cidade"
+                  controlName="city"
+                  [formGroup]="formCustomer"
+                  [(ngModel)]="customer.customerAddress.city"
+                  formControlName="city"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+              <div class="form-group row">
+                <app-input
+                  class="col-5"
+                  label="País"
+                  controlName="country"
+                  [formGroup]="formCustomer"
+                  formControlName="country"
+                  [(ngModel)]="customer.customerAddress.country"
+                  ngDefaultControl
+                  required
+                ></app-input>
+                <app-input
+                  class="col-5"
+                  label="UF"
+                  controlName="state"
+                  [formGroup]="formCustomer"
+                  formControlName="state"
+                  [(ngModel)]="customer.customerAddress.state"
+                  ngDefaultControl
+                  required
+                ></app-input>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="save()">
+              Salvar
+            </button>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </form>
+  </div>
+</div>

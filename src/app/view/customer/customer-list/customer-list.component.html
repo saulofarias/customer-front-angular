@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">Listar Clientes</div>
+  <div class="card-body">
+    <div class="new">
+      <a class="nav-link" [routerLink]="['/clientes/cad']"
+        >Novo <span class="sr-only">(current)</span></a
+      >
+    </div>
+    <h5 class="card-title"></h5>
+
+    <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">CPF</th>
+          <th scope="col">RG</th>
+          <th scope="col">NOME</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <th scope="row">{{ customer.cpf }}</th>
+          <td>
+            {{ customer.rg }}
+          </td>
+          <td>{{ customer.name }}</td>
+          <td>
+            <button
+              (click)="getById(customer.cpf)"
+              class="btn btn-primary mr-2"
+            >
+              Edit
+            </button>
+            <button (click)="deleteById(customer.cpf)" class="btn btn-danger">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
