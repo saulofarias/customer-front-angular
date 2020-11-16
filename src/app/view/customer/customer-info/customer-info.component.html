@@ -71,7 +71,7 @@
                   message=""
                   [formGroup]="formCustomer"
                   formControlName="fixo"
-                  [(ngModel)]="contacts[0]"
+                  [(ngModel)]="customer.contacts[0].number"
                   ngDefaultControl
                 ></app-input>
                 <app-input
@@ -83,7 +83,7 @@
                   message=""
                   [formGroup]="formCustomer"
                   formControlName="movel"
-                  [(ngModel)]="contacts[1]"
+                  [(ngModel)]="customer.contacts[1].number"
                   ngDefaultControl
                   required
                 ></app-input>
