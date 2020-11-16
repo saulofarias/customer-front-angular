@@ -1,28 +1,14 @@
-# CustomerFront
+# Customer Front -  Angular 2
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+## Exemplo de aplicação para cadastro de clientes com as operações básicas de um CRUD.
 
-## Development server
+Está aplicação provê um exemplo prático de um projeto feito em Angular 10 com Bootstrap para
+consumir uma API REST criada em Java com SpringBoot (https://github.com/saulofarias/customer-server-auth).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para a sua devida execução devemos baixar a API e executá-la em nossa máquina conforme orientações da mesma.
 
-## Code scaffolding
+O front-end foi construído usando o Angular e o Bootstrap e após baixar o projeto podemos executá-lo com o comando *npm start* e acessa endereço http://localhost:4200.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para uma demonstração mais detalhada do uso a ferramenta foi gravado um pequeno tutorial com os passos para podermos usar a ferramenta da forma devida.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# customer-front-angular
+ - Link do tutorial: https://www.youtube.com/watch?v=LPEevU4_VIo
