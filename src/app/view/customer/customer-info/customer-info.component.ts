@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { ViaCepService } from 'src/app/core/services/via-cep.service';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { EventDataService } from 'src/app/shared/services/event-data.service';
-import { Contacts } from '../model/contacts';
 import { Customer } from '../model/customer';
 
 @Component({
@@ -21,18 +16,18 @@ export class CustomerInfoComponent implements OnInit {
   formCustomer: FormGroup;
   active = 1;
   zipCode: string;
-  contacts: Array<Contacts> = [];
+  contacts: Array<string> = ['', ''];
   isUpload: boolean = false;
 
   customer: Customer = {
     customerAddress: {},
     contacts: [
       {
-        type: 'telefone',
+        type: 'fixo',
         number: '',
       },
       {
-        type: 'celular',
+        type: 'movel',
         number: '',
       },
     ],
@@ -43,34 +38,48 @@ export class CustomerInfoComponent implements OnInit {
     private viaCepService: ViaCepService,
     private customerService: CustomerService,
     public toastService: ToastService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private activateRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.createForm(this.customer);
-
-    this.eventDataService.eventData.subscribe((event) => {
-      this.getById(event);
+    let urlRoute = this.activateRoute.snapshot.url.filter((val) => {
+      return val.toString().includes('info');
     });
+    if (urlRoute.toString() === 'info') {
+      this.createForm(this.customer);
+      this.eventDataService.eventData.subscribe((event) => {
+        this.getById(event);
+        this.isUpload = true;
+      });
+    } else {
+      this.createForm(new Customer());
+      this.isUpload = false;
+    }
   }
 
   createForm(customer: Customer) {
     this.zipCode = customer.customerAddress.zipCode;
-    this.formCustomer = this.formBuilder.group({
-      cpf: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      rg: ['', Validators.required],
-      street: ['', Validators.required],
-      number: ['', Validators.required],
-      district: ['', Validators.required],
-      complement: [''],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      state: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      fixo: [''],
-      movel: [''],
+    if (customer.contacts[0]) this.contacts.push(customer.contacts[0].number);
+    else this.contacts.push('');
+    if (customer.contacts[1]) this.contacts.push(customer.contacts[1].number);
+    else this.contacts.push('');
+
+    this.formCustomer = new FormGroup({
+      cpf: new FormControl(customer.cpf),
+      name: new FormControl(customer.name),
+      email: new FormControl(customer.email),
+      rg: new FormControl(customer.rg),
+      street: new FormControl(customer.customerAddress.street),
+      number: new FormControl(customer.customerAddress.number),
+      district: new FormControl(customer.customerAddress.district),
+      complement: new FormControl(customer.customerAddress.complement),
+      city: new FormControl(customer.customerAddress.city),
+      country: new FormControl(customer.customerAddress.country),
+      state: new FormControl(customer.customerAddress.state),
+      zipCode: new FormControl(this.zipCode),
+      fixo: new FormControl(this.contacts[0]),
+      movel: new FormControl(this.contacts[1]),
     });
   }
 
@@ -78,7 +87,7 @@ export class CustomerInfoComponent implements OnInit {
     if (event.keyCode === 13)
       this.viaCepService.getAddressByZipCode(this.zipCode).subscribe({
         next: (address) => {
-          console.log(address);
+          console.log('endereço ' + address);
           this.customer.customerAddress.country = 'Brasil';
           this.customer.customerAddress.street = address.logradouro;
           this.customer.customerAddress.district = address.bairro;
@@ -96,15 +105,15 @@ export class CustomerInfoComponent implements OnInit {
   private getById(id) {
     this.customerService.getById(id).subscribe({
       next: (customer) => {
-        this.isUpload = true;
         this.customer = customer;
-        this.createForm(customer);
+        this.createForm(this.customer);
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
+
   save() {
     this.customer.customerAddress.zipCode = this.zipCode;
     if (this.isUpload) {
@@ -117,7 +126,7 @@ export class CustomerInfoComponent implements OnInit {
           this.toastService.error(err.error.message);
         },
       });
-      this.formCustomer.reset();
+      this.resetForm();
     } else {
       this.customerService.save(this.customer).subscribe({
         next: (customer) => {
@@ -129,7 +138,13 @@ export class CustomerInfoComponent implements OnInit {
           this.toastService.error(err.error.message);
         },
       });
-      this.formCustomer.reset();
+      this.resetForm();
     }
+  }
+
+  private resetForm() {
+    this.customer = new Customer();
+    this.createForm(new Customer());
+    this.formCustomer.reset();
   }
 }

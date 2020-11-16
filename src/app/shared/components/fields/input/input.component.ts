@@ -8,6 +8,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 })
 export class InputComponent implements OnInit {
   @Input() label: string;
+  @Input() type: string = 'text';
   @Input() controlName: string;
   @Input() message: string;
   @Input() formGroup: FormGroup;

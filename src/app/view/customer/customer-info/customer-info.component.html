@@ -26,6 +26,7 @@
                   class="col-4"
                   label="Email*"
                   name="email"
+                  type="email"
                   controlName="email"
                   message=""
                   [formGroup]="formCustomer"
@@ -65,20 +66,24 @@
                   class="col-4"
                   label="Telefone"
                   controlName="fixo"
+                  name="fixo"
+                  type="telefone"
                   message=""
                   [formGroup]="formCustomer"
                   formControlName="fixo"
-                  [(ngModel)]="customer.contacts[0].number"
+                  [(ngModel)]="contacts[0]"
                   ngDefaultControl
                 ></app-input>
                 <app-input
                   class="col-4"
                   label="Celular*"
                   controlName="movel"
+                  name="movel"
+                  type="telefone"
                   message=""
                   [formGroup]="formCustomer"
                   formControlName="movel"
-                  [(ngModel)]="customer.contacts[1].number"
+                  [(ngModel)]="contacts[1]"
                   ngDefaultControl
                   required
                 ></app-input>
@@ -130,6 +135,7 @@
                   controlName="district"
                   [formGroup]="formCustomer"
                   formControlName="district"
+                  [(ngModel)]="customer.customerAddress.district"
                   ngDefaultControl
                   required
                 ></app-input>
@@ -141,6 +147,7 @@
                   controlName="complement"
                   [formGroup]="formCustomer"
                   formControlName="complement"
+                  [(ngModel)]="customer.customerAddress.complement"
                   ngDefaultControl
                 ></app-input>
                 <app-input
@@ -148,8 +155,8 @@
                   label="Cidade"
                   controlName="city"
                   [formGroup]="formCustomer"
-                  [(ngModel)]="customer.customerAddress.city"
                   formControlName="city"
+                  [(ngModel)]="customer.customerAddress.city"
                   ngDefaultControl
                   required
                 ></app-input>

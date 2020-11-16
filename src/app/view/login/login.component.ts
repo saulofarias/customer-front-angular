@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   signinForm: FormGroup;
+  title = 'Login';
   constructor(
     public formBuilder: FormBuilder,
     public authService: AuthService,

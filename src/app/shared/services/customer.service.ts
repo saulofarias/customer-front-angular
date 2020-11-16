@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Customer} from 'src/app/view/customer/model/customer';
+import { Customer } from 'src/app/view/customer/model/customer';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  uri: string = 'http://localhost:8080/api/customers';
+  uri: string = environment.URL;
 
   constructor(private httpClient: HttpClient) {}
 
   getAll(): Observable<Customer[]> {
-    return this.httpClient.get<Customer[]>(this.uri);
+    return this.httpClient.get<Customer[]>(`${this.uri}customers`);
   }
 
   getById(id): Observable<Customer> {
-    return this.httpClient.get<Customer>(this.uri + '/' + id);
+    return this.httpClient.get<Customer>(`${this.uri}customers/${id}`);
   }
 
   save(customer): Observable<Customer> {
-    return this.httpClient.post<Customer>(this.uri, customer);
+    return this.httpClient.post<Customer>(`${this.uri}customers`, customer);
   }
 
   update(customer, id): Observable<any> {
-    return this.httpClient.put<any>(this.uri + '/' + id, customer);
+    return this.httpClient.put<any>(`${this.uri}customers/${id}`, customer);
   }
 
   delete(id): Observable<any> {
-    return this.httpClient.delete<any>(this.uri + '/' + id);
+    return this.httpClient.delete<any>(`${this.uri}customers/${id}`);
   }
 }
